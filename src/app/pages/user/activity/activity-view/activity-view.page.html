@@ -1,0 +1,39 @@
+<ion-header>
+   <ion-toolbar color="light">
+      <ion-buttons slot="start">
+         <ion-back-button defaultHref="/user/activity"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Détail de l'action</ion-title>
+      <ion-buttons *ngIf="canModify" slot="end">
+         <ion-button (click)="editActivity()" icon-only>
+            <ion-icon name="create-outline"></ion-icon>
+         </ion-button>
+      </ion-buttons>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content>
+   <ion-card>
+      <ng-container *ngIf="activity">
+         <ion-img *ngIf="activity.image" [src]="activity.image | fileUrl: 'jpg'" alt=""></ion-img>
+         <ion-card-header>
+            <ion-card-title>{{ activity.title }}</ion-card-title>
+            <ion-card-subtitle
+               >{{ activity.date | date:"dd-MM-yyyy à HH:mm"}} par {{ activity.userPseudo }}</ion-card-subtitle
+            >
+         </ion-card-header>
+         <ion-card-content>
+            <p>{{ activity.description }}</p>
+            <p>
+               <ion-icon class="icon" size="small" name="navigate-circle"></ion-icon>
+               <span class="text">{{ activity.latitude }}, {{ activity.longitude }}</span>
+            </p>
+            <p>
+               <ion-icon class="icon" color="danger" size="small" name="heart"></ion-icon>
+               <span class="text">{{ activity.numberOfLikes }}</span>
+            </p>
+         </ion-card-content>
+      </ng-container>
+      <div id="mapIdActivityView" style="width: 100%; height: 350px"></div>
+   </ion-card>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header>
+   <ion-toolbar color="light">
+      <ion-buttons slot="start">
+         <ion-back-button defaultHref="/user/event"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Détail de l'événement</ion-title>
+      <ion-buttons *ngIf="canModify" slot="end">
+         <ion-button (click)="editEvent()" icon-only>
+            <ion-icon name="create-outline"></ion-icon>
+         </ion-button>
+      </ion-buttons>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content>
+   <ion-card>
+      <ng-container *ngIf="eventModel">
+         <ion-img *ngIf="eventModel.image" [src]="eventModel.image | fileUrl: 'jpg'" alt=""></ion-img>
+         <ion-card-header>
+            <ion-card-title>{{ eventModel.title }}</ion-card-title>
+            <ion-card-subtitle
+               >{{ eventModel.date | date:"dd-MM-yyyy à HH:mm"}} organisé par {{ eventModel.userPseudo }}</ion-card-subtitle
+            >
+         </ion-card-header>
+         <ion-card-content>
+            <p>{{ eventModel.description }}</p>
+            <p>
+               <ion-icon class="icon" color="success" size="small" name="calendar"></ion-icon>
+               <span class="text"
+                  >{{ eventModel.numberOfParticipants }}/{{ eventModel.maxParticipant }} (min.
+                  {{eventModel.minParticipant}} participants)</span
+               >
+            </p>
+            <p>
+               <ion-icon class="icon" size="small" name="navigate-circle"></ion-icon>
+               <span class="text">{{ eventModel.latitude }}, {{ eventModel.longitude }}</span>
+            </p>
+            <p>
+               <ion-icon class="icon" color="danger" size="small" name="heart"></ion-icon>
+               <span class="text">{{ eventModel.numberOfLikes }}</span>
+            </p>
+         </ion-card-content>
+      </ng-container>
+      <div id="mapIdEventView" style="width: 100%; height: 350px"></div>
+   </ion-card>
+</ion-content>

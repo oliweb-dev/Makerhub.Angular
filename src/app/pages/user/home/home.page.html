@@ -1,0 +1,90 @@
+<ion-content>
+   <ng-container *ngIf="userHome">
+      <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+         <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <div class="header">
+         <h1>Ensemble pour la nature</h1>
+
+         <div class="space-between">
+            <div class="followings">
+               <ion-badge
+                  >{{ userHome.numberOfActivities }} action{{ userHome.numberOfActivities > 1 ? 's' : ''
+                  }}</ion-badge
+               >
+            </div>
+            <div class="followings">
+               <ion-badge
+                  >{{ userHome.numberOfMeetings }} événement{{ userHome.numberOfMeetings > 1 ? 's' : ''
+                  }}</ion-badge
+               >
+            </div>
+         </div>
+      </div>
+      <div class="flex-profil">
+         <div class="border-box-1">
+            <div class="border-box-2">
+               <div class="img-box">
+                  <img *ngIf="userHome.image" [src]="userHome.image | fileUrl: 'jpg'" />
+                  <img
+                     *ngIf="!userHome.image"
+                     src="../../../assets/img/pexels-julian-jagtenberg-103123.jpg"
+                  />
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <ion-list>
+         <ion-list-header>
+            <ion-label>Mes dernières actions</ion-label>
+         </ion-list-header>
+         <ion-item button *ngFor="let item of userHome.activities" (click)="presentActionSheetActivity(item)">
+            <ion-thumbnail *ngIf="item.image" slot="start">
+               <ion-img [src]="item.image | fileUrl: 'jpg'"></ion-img>
+            </ion-thumbnail>
+            <ion-thumbnail *ngIf="!item.image" slot="start">
+               <ion-img src="../../../assets/img/no-image.png"></ion-img>
+            </ion-thumbnail>
+            <ion-label
+               >{{ item.title }}
+               <p>{{ item.date | date:"dd-MM-yyyy à HH:mm" }} par {{ item.userPseudo }}</p>
+            </ion-label>
+            <ion-icon *ngIf="item.isLiked" color="danger" size="small" name="heart" slot="end"></ion-icon>
+            <ion-icon
+               *ngIf="item.isPublic"
+               color="success"
+               size="small"
+               name="lock-open"
+               slot="end"
+            ></ion-icon>
+         </ion-item>
+      </ion-list>
+
+      <ion-list>
+         <ion-list-header>
+            <ion-label>Mes prochains événements</ion-label>
+         </ion-list-header>
+         <ion-item button *ngFor="let item of userHome.meetings" (click)="presentActionSheetEvent(item)">
+            <ion-thumbnail *ngIf="item.image" slot="start">
+               <ion-img [src]="item.image | fileUrl: 'jpg'"></ion-img>
+            </ion-thumbnail>
+            <ion-thumbnail *ngIf="!item.image" slot="start">
+               <ion-img src="../../../assets/img/no-image.png"></ion-img>
+            </ion-thumbnail>
+            <ion-label
+               >{{ item.title }}
+               <p>{{ item.date | date : 'dd-MM-yyyy à HH:mm'}}</p>
+            </ion-label>
+            <ion-icon *ngIf="item.isLiked" size="small" color="danger" name="heart" slot="end"></ion-icon>
+            <ion-icon
+               *ngIf="item.isRegistered"
+               size="small"
+               color="success"
+               name="calendar"
+               slot="end"
+            ></ion-icon>
+         </ion-item>
+      </ion-list>
+   </ng-container>
+</ion-content>

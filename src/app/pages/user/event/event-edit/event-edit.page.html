@@ -1,0 +1,136 @@
+<ion-header>
+   <ion-toolbar color="light">
+      <ion-buttons slot="start">
+         <ion-back-button defaultHref="/user/event"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Modifier un événement</ion-title>
+      <ion-buttons *ngIf="canDelete" slot="end">
+         <ion-button (click)="presentAlert()" icon-only>
+            <ion-icon name="trash-outline"></ion-icon>
+         </ion-button>
+      </ion-buttons>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-top">
+   <form *ngIf="eventModel && fg" [formGroup]="fg" (ngSubmit)="onSubmit()">
+      <ion-list>
+         <ion-item>
+            <ion-label position="floating">Titre</ion-label>
+            <ion-input formControlName="title" appTrim required></ion-input>
+            <ng-container *ngIf="title?.invalid && (title?.dirty || title?.touched)">
+               <ion-note slot="error" *ngIf=" title?.errors?.required">Le titre est obligatoire</ion-note>
+               <ion-note slot="error" *ngIf=" title?.errors?.minlength"
+                  >Le titre doit comporter au minimum 2 caractères</ion-note
+               >
+               <ion-note slot="error" *ngIf=" title?.errors?.maxlength"
+                  >Le titre doit comporter au minimum 100 caractères</ion-note
+               >
+            </ng-container>
+         </ion-item>
+
+         <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-textarea formControlName="description" [autoGrow]="true"></ion-textarea>
+         </ion-item>
+
+         <ion-item>
+            <ion-label position="floating">Nombre minimum de participants</ion-label>
+            <ion-input formControlName="minParticipant" type="number"></ion-input>
+            <ng-container
+               *ngIf="minParticipant?.invalid && (minParticipant?.dirty || minParticipant?.touched)"
+            >
+               <ion-note slot="error" *ngIf=" minParticipant?.errors?.pattern"
+                  >Ce nombre n'est pas valide</ion-note
+               >
+               <ion-note slot="error" *ngIf="minParticipant?.errors?.required"
+                  >Ce champ est obligatoire</ion-note
+               >
+               <ion-note slot="error" *ngIf="minParticipant?.errors?.min"
+                  >Ce champ doit être compris entre 1 et 200</ion-note
+               >
+               <ion-note slot="error" *ngIf="minParticipant?.errors?.max"
+                  >Ce champ doit être compris entre 1 et 200</ion-note
+               >
+               <ion-note slot="error" *ngIf="minParticipant?.errors?.['minMax']"
+                  >Ce champ doit être inférieur au maximum de participants</ion-note
+               >
+            </ng-container>
+         </ion-item>
+
+         <ion-item>
+            <ion-label position="floating">Nombre maximum de participants</ion-label>
+            <ion-input formControlName="maxParticipant" type="number"></ion-input>
+            <ng-container
+               *ngIf="maxParticipant?.invalid && (maxParticipant?.dirty || maxParticipant?.touched)"
+            >
+               <ion-note slot="error" *ngIf=" maxParticipant?.errors?.pattern"
+                  >Ce nombre n'est pas valide</ion-note
+               >
+               <ion-note slot="error" *ngIf=" maxParticipant?.errors?.required"
+                  >Ce champ est obligatoire</ion-note
+               >
+               <ion-note slot="error" *ngIf=" maxParticipant?.errors?.min"
+                  >Ce champ doit être compris entre 1 et 200</ion-note
+               >
+               <ion-note slot="error" *ngIf=" maxParticipant?.errors?.max"
+                  >Ce champ doit être compris entre 1 et 200</ion-note
+               >
+            </ng-container>
+         </ion-item>
+
+         <ion-item>
+            <ion-label>Photo</ion-label>
+            <ion-buttons slot="end">
+               <ion-button *ngIf="photo || eventModel.image" (click)="removePhoto()" icon-only>
+                  <ion-icon name="trash-outline" size="default" color="danger"></ion-icon>
+               </ion-button>
+               <ion-button *ngIf="!photo && !eventModel.image" (click)="openModalPhoto()" icon-only>
+                  <ion-icon name="camera-outline" size="default"></ion-icon>
+               </ion-button>
+            </ion-buttons>
+            <ion-thumbnail *ngIf="photo && isPhotoModified" slot="end">
+               <img alt="" src="{{ photo }}" />
+            </ion-thumbnail>
+            <ion-thumbnail *ngIf="eventModel.image && !isPhotoModified" slot="end">
+               <img alt="" src="{{apiUrl}}/File/{{ eventModel.image }}.jpg" />
+            </ion-thumbnail>
+         </ion-item>
+
+         <ion-item (click)="showPicker = !showPicker">
+            <ion-label>Date</ion-label>
+            <ion-text slot="end">{{ eventModel.date | date:"dd-MM-yyyy à HH:mm" }}</ion-text>
+         </ion-item>
+         <ion-datetime
+            *ngIf="showPicker"
+            #datetime
+            [value]="eventModel.date"
+            size="cover"
+            color="success"
+            [showDefaultButtons]="true"
+            doneText="Ok"
+            cancelText="Annuler"
+            (ionCancel)="showPicker = false"
+            (ionChange)="dateChanged(datetime.value)"
+         ></ion-datetime>
+
+         <ion-item>
+            <ion-label>Position</ion-label>
+            <ion-buttons slot="end">
+               <ion-button (click)="openModal()" icon-only>
+                  <ion-icon name="map-outline" size="default"></ion-icon>
+               </ion-button>
+            </ion-buttons>
+            <!-- <ion-text slot="end">{{ latitude }} {{ longitude }}</ion-text> -->
+         </ion-item>
+      </ion-list>
+
+      <ion-grid>
+         <ion-row>
+            <ion-col class="ion-margin-top">
+               <ion-button type="submit" [disabled]="fg.invalid">Modifier</ion-button>
+            </ion-col>
+         </ion-row>
+      </ion-grid>
+   </form>
+</ion-content>

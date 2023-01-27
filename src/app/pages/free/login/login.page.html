@@ -1,0 +1,34 @@
+<ion-header>
+   <ion-toolbar color="light">
+      <ion-title>Page de connexion</ion-title>
+      <ion-buttons slot="end">
+         <ion-button [routerLink]="['/register/']" icon-only>
+            <ion-icon name="add"></ion-icon>
+         </ion-button>
+      </ion-buttons>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-top">
+   <form [formGroup]="fg" (ngSubmit)="onSubmit()">
+      <ion-list>
+         <ion-item>
+            <ion-label position="floating">Email : </ion-label>
+            <ion-input type="email" formControlName="email" required></ion-input>
+         </ion-item>
+
+         <ion-item>
+            <ion-label position="floating">Mot de passe : </ion-label>
+            <ion-input type="password" formControlName="password" required></ion-input>
+         </ion-item>
+      </ion-list>
+
+      <ion-grid>
+         <ion-row>
+            <ion-col>
+               <ion-button type="submit" [disabled]="fg.invalid">Se connecter</ion-button>
+            </ion-col>
+         </ion-row>
+      </ion-grid>
+   </form>
+</ion-content>

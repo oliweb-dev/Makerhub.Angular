@@ -1,0 +1,62 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+ion-content {
+   --ion-background-color: #f2f2f2;
+}
+
+ion-col {
+   text-align: center;
+}
+
+ion-button {
+   --background: #3da35d;
+   --background-hover: #96e072;
+   padding: -20px;
+}
+
+ion-toggle {
+   --background-checked: #96e072;
+   --handle-background-checked: #3da35d;
+   --padding-top: 0px;
+   --padding-end: 0px;
+}
+
+ion-datetime {
+   --background: #f2f2f2;
+}
+
+ion-list-header {
+   font-size: 1.1em;
+}
+
+ion-checkbox {
+   --background-checked: #3da35d;
+   --border-color-checked: rgb(131, 129, 129);
+}
+
+/* Core CSS required for Ionic components to work properly */
+@import '~@ionic/angular/css/core.css';
+
+/* Basic CSS for apps built with Ionic */
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+
+@import '~leaflet/dist/leaflet.css';

@@ -1,0 +1,116 @@
+<ion-header>
+   <ion-toolbar color="light">
+      <ion-buttons slot="start">
+         <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Créer votre compte</ion-title>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-top">
+   <form [formGroup]="fg" (ngSubmit)="onSubmit()">
+      <ion-list>
+         <ion-item>
+            <ion-label position="floating">Prénom</ion-label>
+            <ion-input type="text" formControlName="firstname"></ion-input>
+            <ng-container *ngIf="firstname?.invalid && (firstname?.dirty || firstname?.touched)">
+               <ion-note slot="error" *ngIf=" firstname?.errors?.required"
+                  >Le prénom est obligatoire</ion-note
+               >
+               <ion-note slot="error" *ngIf=" firstname?.errors?.minlcheckength"
+                  >Le prénom doit comporter au minimum 1 caractère</ion-note
+               >
+               <ion-note slot="error" *ngIf=" firstname?.errors?.maxlength"
+                  >Le prénom doit comporter au minimum 100 caractères</ion-note
+               >
+            </ng-container>
+         </ion-item>
+
+         <ion-item>
+            <ion-label position="floating">Nom de famille</ion-label>
+            <ion-input type="text" formControlName="lastname"></ion-input>
+            <ng-container *ngIf="lastname?.invalid && (lastname?.dirty || lastname?.touched)">
+               <ion-note slot="error" *ngIf=" lastname?.errors?.required"
+                  >Le nom de famille est obligatoire</ion-note
+               >
+               <ion-note slot="error" *ngIf=" lastname?.errors?.minlength"
+                  >Le nom de famille doit comporter au minimum 1 caractère</ion-note
+               >
+               <ion-note slot="error" *ngIf=" lastname?.errors?.maxlength"
+                  >Le nom de famille doit comporter au minimum 100 caractères</ion-note
+               >
+            </ng-container>
+         </ion-item>
+
+         <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+            <ng-container *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+               <ion-note slot="error" *ngIf=" email?.errors?.required">L'email est obligatoire</ion-note>
+               <ion-note slot="error" *ngIf=" email?.errors?.email"
+                  >Le format de l'email est incorrect</ion-note
+               >
+               <ion-note slot="error" *ngIf=" email?.errors?.maxlength"
+                  >L'email doit comporter au minimum 120 caractères</ion-note
+               >
+            </ng-container>
+         </ion-item>
+
+         <ion-item>
+            <ion-label position="floating">Pseudo</ion-label>
+            <ion-input type="text" formControlName="pseudo"></ion-input>
+            <ng-container *ngIf="pseudo?.invalid && (pseudo?.dirty || pseudo?.touched)">
+               <ion-note slot="error" *ngIf=" pseudo?.errors?.required">Le pseudo est obligatoire</ion-note>
+               <ion-note slot="error" *ngIf=" pseudo?.errors?.minlength"
+                  >Le pseudo doit comporter au minimum 2 caractères</ion-note
+               >
+               <ion-note slot="error" *ngIf=" pseudo?.errors?.maxlength"
+                  >Le pseudo doit comporter au minimum 50 caractères</ion-note
+               >
+            </ng-container>
+         </ion-item>
+
+         <ion-item>
+            <ion-label position="floating">Mot de passe</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+            <ng-container *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+               <ion-note slot="error" *ngIf=" password?.errors?.required"
+                  >Le mot de passe est obligatoire</ion-note
+               >
+               <ion-note slot="error" *ngIf=" password?.errors?.minlength"
+                  >Le mot de passe doit comporter au minimum 4 caractères</ion-note
+               >
+               <ion-note slot="error" *ngIf=" password?.errors?.maxlength"
+                  >Le mot de passe doit comporter au minimum 100 caractères</ion-note
+               >
+            </ng-container>
+         </ion-item>
+
+         <ion-item>
+            <ion-label position="floating">Confirmation du mot de passe</ion-label>
+            <ion-input type="password" formControlName="confirmpassword"></ion-input>
+            <ng-container
+               *ngIf="confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched)"
+            >
+               <ion-note slot="error" *ngIf=" confirmpassword?.errors?.required"
+                  >Le mot de passe de confirmation est obligatoire</ion-note
+               >
+               <ion-note slot="error" *ngIf=" confirmpassword?.errors?.minlength"
+                  >Le mot de passe de confirmation doit comporter au minimum 4 caractères</ion-note
+               >
+               <ion-note slot="error" *ngIf=" confirmpassword?.errors?.maxlength"
+                  >Le mot de passe de confirmation doit comporter au minimum 100 caractères</ion-note
+               >
+            </ng-container>
+         </ion-item>
+      </ion-list>
+
+      <ion-grid>
+         <ion-row>
+            <ion-col>
+               <ion-button type="submit" [disabled]="fg.invalid">Confirmer</ion-button>
+            </ion-col>
+         </ion-row>
+      </ion-grid>
+   </form>
+</ion-content>

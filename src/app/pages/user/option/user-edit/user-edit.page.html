@@ -1,0 +1,59 @@
+<ion-header>
+   <ion-toolbar color="light">
+      <ion-buttons slot="start">
+         <ion-back-button defaultHref="/user/option"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Modifier mes informations</ion-title>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-top">
+   <form *ngIf="user && fg" [formGroup]="fg" (ngSubmit)="onSubmit()">
+      <ion-list>
+         <ion-item>
+            <ion-label position="floating">Prénom</ion-label>
+            <ion-input formControlName="firstname" required></ion-input>
+         </ion-item>
+         <ion-item>
+            <ion-label position="floating">Nom de famille</ion-label>
+            <ion-input formControlName="lastname" required></ion-input>
+         </ion-item>
+         <ion-item>
+            <ion-label>Photo</ion-label>
+            <ion-buttons slot="end">
+               <ion-button *ngIf="photo || user?.image" (click)="removePhoto()" icon-only>
+                  <ion-icon name="trash-outline" size="default" color="danger"></ion-icon>
+               </ion-button>
+               <ion-button *ngIf="!photo && !user?.image" (click)="openModal()" icon-only>
+                  <ion-icon name="camera-outline" size="default"></ion-icon>
+               </ion-button>
+            </ion-buttons>
+            <ion-thumbnail *ngIf="photo && isPhotoModified" slot="end">
+               <img alt="" src="{{ photo }}" />
+            </ion-thumbnail>
+            <ion-thumbnail *ngIf="user?.image && !isPhotoModified" slot="end">
+               <img alt="" [src]="user?.image | fileUrl: 'jpg'" />
+            </ion-thumbnail>
+         </ion-item>
+         <ion-item>
+            <ion-label position="floating">Pseudo</ion-label>
+            <ion-input formControlName="pseudo" [disabled]="true"></ion-input>
+         </ion-item>
+         <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input formControlName="email" [disabled]="true"></ion-input>
+         </ion-item>
+         <ion-item>
+            <ion-label position="floating">Date de la création du compte</ion-label>
+            <ion-input formControlName="dateCreated" [disabled]="true"></ion-input>
+         </ion-item>
+      </ion-list>
+      <ion-grid>
+         <ion-row>
+            <ion-col>
+               <ion-button type="submit" [disabled]="fg.invalid">Modifier</ion-button>
+            </ion-col>
+         </ion-row>
+      </ion-grid>
+   </form>
+</ion-content>
